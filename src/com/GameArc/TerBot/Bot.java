@@ -19,7 +19,7 @@ public class Bot {
 		}
 	}
 	
-	public static void setInit(){
+	public static void setInit() throws Exception{
 		try {	
 			c = new Socket("localhost", 7777);
 			out = c.getOutputStream();
@@ -47,7 +47,7 @@ public class Bot {
 					0x0A, 0x00, 0x00, 0x00, 0x0C, Storage.PlayerID,(byte) 0xFF, (byte) 0xFF, (byte) 0xFF, (byte) 0xFF, (byte) 0xFF, (byte) 0xFF, (byte) 0xFF, (byte) 0xFF
 			});
 		} catch (Exception e) {
-			System.out.println("Exception: " + e.toString());
+			System.out.println("Exception: " + e.getMessage());
 		}
 	}
 	
