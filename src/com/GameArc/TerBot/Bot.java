@@ -13,8 +13,10 @@ public class Bot {
 	
 	public static void main(String args[]) throws Exception{
 		setInit();
-		while(true)
-			Thread.sleep(1);
+		while(true) { 
+			//out.write(Player.MakePacket());
+			Thread.sleep(10);
+		}
 	}
 	
 	public static void setInit(){
@@ -30,24 +32,20 @@ public class Bot {
 			in.skip(3);
 			in.read(buf);
 			Storage.PlayerID = buf[1];
-			
+			new Thread(new Listen()).start();
 			out.write(Storage.CharacterData);
 			out.write(Storage.Health);
 			out.write(Storage.Mana);
 			out.write(Storage.Buff);
-			out.write(new byte[]{0x01, 0x00, 0x00, 0x00, 0x06});
-			buf = new byte[in.read()];
-			in.skip(3);
-			in.read(buf);
-			System.out.println(new String(buf));
-			
-			out.write(new byte[]{0x09, 0x00, 0x00, 0x00, 0x08, (byte) 0xFF, (byte) 0xFF, (byte) 0xFF, (byte) 0xFF, (byte) 0xFF, (byte) 0xFF, (byte) 0xFF, (byte) 0xFF});
-			
-			buf = new byte[in.read()];
-			in.skip(3);
-			in.read(buf);
-			System.out.println(new String(buf));
-			out.write(new byte[]{0x0A, 0x00, 0x00, 0x00, 0x0C, Storage.PlayerID,(byte) 0xFF, (byte) 0xFF, (byte) 0xFF, (byte) 0xFF, (byte) 0xFF, (byte) 0xFF, (byte) 0xFF, (byte) 0xFF});
+			out.write(new byte[]{
+					0x01, 0x00, 0x00, 0x00, 0x06
+			});
+			out.write(new byte[]{
+					0x09, 0x00, 0x00, 0x00, 0x08, (byte) 0xFF, (byte) 0xFF, (byte) 0xFF, (byte) 0xFF, (byte) 0xFF, (byte) 0xFF, (byte) 0xFF, (byte) 0xFF
+			});
+			out.write(new byte[]{
+					0x0A, 0x00, 0x00, 0x00, 0x0C, Storage.PlayerID,(byte) 0xFF, (byte) 0xFF, (byte) 0xFF, (byte) 0xFF, (byte) 0xFF, (byte) 0xFF, (byte) 0xFF, (byte) 0xFF
+			});
 		} catch (Exception e) {
 			System.out.println("Exception: " + e.toString());
 		}
