@@ -21,17 +21,17 @@ public class Bot {
 	
 	public static void setInit() throws Exception{
 		try {	
-			c = new Socket("localhost", 7777);
+			c = new Socket("172.16.1.18", 7777);
 			out = c.getOutputStream();
 			in = c.getInputStream();
 			out.write(new byte[]{
-				0x0b, 0x00, 0x00, 0x00, 0x01, 0x54, 0x65, 0x72, 0x72, 0x61, 0x72, 0x69, 0x61, 0x33, 0x37
+				0x0b, 0x00, 0x00, 0x00, 0x01, 0x54, 0x65, 0x72, 0x72, 0x61, 0x72, 0x69, 0x61, 0x33, 0x37 //Terraria37
 			});
 			
-			byte buf[] = new byte[in.read()];
-			in.skip(3);
+			byte buf[] = new byte[in.read()+in.read()+in.read()+in.read()];
 			in.read(buf);
 			Storage.PlayerID = buf[1];
+			System.out.println("PlayerID: " + buf[1]);
 			new Thread(new Listen()).start();
 			out.write(Storage.CharacterData);
 			out.write(Storage.Health);

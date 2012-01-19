@@ -8,23 +8,26 @@ public class Listen implements Runnable{
 		try{
 			while(true){
 				size = Bot.in.read()+Bot.in.read()+Bot.in.read()+Bot.in.read();
-				System.out.print(size + " ");
-				if(!(size < 1)){
+				System.out.print(size + ":");
 					buff = new byte[size];
 					Bot.in.read(buff);
 					System.out.println(buff[0]);
+					for(byte b : buff)
+						System.out.print(b + ", ");
+					System.out.println();
 					ParsePacket();
 					//for(byte b : buff) System.out.print(b);
-				}
 			}
 		}catch(Exception e){
-			System.out.println("Exception: " + e.toString());
+			e.printStackTrace();
 		}
 	}
 	
 	public void ParsePacket() {
 		int i = 0;
 		switch(buff[i++]){
+			case 0x00:
+			break;
 			case 0x02:	//Disconnect
 				System.out.println("Disconnected from server\nReason: " + new String(buff));
 				System.exit(1);
