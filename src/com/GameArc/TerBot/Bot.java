@@ -1,15 +1,16 @@
 package com.GameArc.TerBot;
 
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+
+import com.GameArc.TerBot.io.LittleEndianDataInputStream;
+import com.GameArc.TerBot.io.LittleEndianDataOutputStream;
 
 public class Bot {
 	static Socket c, s;
 	static ServerSocket ss;
-	static OutputStream out;
-	static InputStream in;
+	static LittleEndianDataOutputStream out;
+	static LittleEndianDataInputStream in;
 	
 	public static void main(String args[]) throws Exception{
 		setInit();
@@ -21,18 +22,19 @@ public class Bot {
 	
 	public static void setInit() throws Exception{
 		try {	
-			c = new Socket("172.16.1.18", 7777);
-			out = c.getOutputStream();
-			in = c.getInputStream();
+			c = new Socket("localhost", 7777);
+			out = new LittleEndianDataOutputStream(c.getOutputStream());
+			in = new LittleEndianDataInputStream(c.getInputStream());
 			out.write(new byte[]{
-				0x0b, 0x00, 0x00, 0x00, 0x01, 0x54, 0x65, 0x72, 0x72, 0x61, 0x72, 0x69, 0x61, 0x33, 0x37 //Terraria37
+				0x0b, 0x00, 0x00, 0x00, 0x01
 			});
+			out.writeString("Terraria39");
 			
-			byte buf[] = new byte[in.read()+in.read()+in.read()+in.read()];
-			in.read(buf);
-			Storage.PlayerID = buf[1];
-			System.out.println("PlayerID: " + buf[1]);
+			
+			byte buf[] = new byte[in.readInt()];
+			in.readFully(buf);
 			new Thread(new Listen()).start();
+			Storage.PlayerID = buf[1];
 			out.write(Storage.CharacterData);
 			out.write(Storage.Health);
 			out.write(Storage.Mana);
@@ -47,7 +49,7 @@ public class Bot {
 					0x0A, 0x00, 0x00, 0x00, 0x0C, Storage.PlayerID,(byte) 0xFF, (byte) 0xFF, (byte) 0xFF, (byte) 0xFF, (byte) 0xFF, (byte) 0xFF, (byte) 0xFF, (byte) 0xFF
 			});
 		} catch (Exception e) {
-			System.out.println("Exception: " + e.getMessage());
+			e.printStackTrace();
 		}
 	}
 	
