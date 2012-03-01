@@ -12,7 +12,7 @@ public class Listen implements Runnable{
 				pID = Bot.in.readByte();
 				if(pID != 70)
 				size--;
-				System.out.println("Packet ID: " + pID + "\nSize: " + (size));
+				//System.out.println("Packet ID: " + pID + "\nSize: " + (size));
 				ParsePacket();
 			}
 		}catch(Exception e){
@@ -25,13 +25,18 @@ public class Listen implements Runnable{
 		byte[] tmp;
 		switch(pID){
 			default:
-				System.out.println(Bot.in.readString());
-			break;
+				tmp = new byte[size];
+				Bot.in.readFully(tmp, 0, size);
+				break;
 			case 0x02:	//Disconnect
 				tmp = new byte[size];
-				Bot.in.read(tmp, 0, size);
+				Bot.in.readFully(tmp, 0, size);
 				System.out.println("Disconnected from server\nReason: " + new String(tmp).trim());
 				System.exit(1);
+				break;
+			case 0x04:
+				tmp = new byte[size];
+				Bot.in.readFully(tmp, 0, size);
 				break;
 			case 0x07:	//WorldInfo
 				Storage.Time = Bot.in.readInt();
@@ -48,127 +53,137 @@ public class Listen implements Runnable{
 				Storage.WorldID =	Bot.in.readInt();
 				Storage.BossFlag =	Bot.in.readByte();
 				tmp = new byte[size-36];
-				Bot.in.read(tmp, 0, size-36);
+				Bot.in.readFully(tmp, 0, size-36);
 				Storage.ServerName = new String(tmp).trim();
 				System.out.println("Server Name: " + Storage.ServerName);
 				break;
 			case 0x09:	//Status
 				Bot.in.readInt();
 				tmp = new byte[size-4];
-				Bot.in.read(tmp, 0, size-4);
+				Bot.in.readFully(tmp, 0, size-4);
 				System.out.println("Status: " + new String(tmp).trim());
 				break;
 			case 0x0A:	//Tile Send Section
 				tmp = new byte[size];
-				Bot.in.read(tmp, 0, size);
+				Bot.in.readFully(tmp, 0, size);
 				break;
 			case 0x0B:	//Tile Frame Section
 				tmp = new byte[size];
-				Bot.in.read(tmp, 0, size);
+				Bot.in.readFully(tmp, 0, size);
+				break;
+			case 0x0D: //Player update
+				Bot.teamate.PlayerID = Bot.in.readByte();
+				Bot.teamate.Control = Bot.in.readByte();
+				Bot.teamate.SelectedItem = Bot.in.readByte();
+				Bot.teamate.X = Bot.in.readFloat();
+				Bot.teamate.Y = Bot.in.readFloat();
+				Bot.teamate.vX = Bot.in.readFloat();
+				Bot.teamate.vY = Bot.in.readFloat();
 				break;
 			case 0x0E:	//Player Active
 				tmp = new byte[size];
-				Bot.in.read(tmp, 0, size);
+				Bot.in.readFully(tmp, 0, size);
 				break;
 			case 0x11:	//Modify Tile
 				tmp = new byte[size];
-				Bot.in.read(tmp, 0, size);
+				Bot.in.readFully(tmp, 0, size);
 				break;
 			case 0x12:	//Time Set
 				tmp = new byte[size];
-				Bot.in.read(tmp, 0, size);
+				Bot.in.readFully(tmp, 0, size);
 				break;
 			case 0x13:	//Door Use
 				tmp = new byte[size];
-				Bot.in.read(tmp, 0, size);
+				Bot.in.readFully(tmp, 0, size);
 				break;
 			case 0x14:	//Tile Send Square
 				tmp = new byte[size];
-				Bot.in.read(tmp, 0, size);
+				Bot.in.readFully(tmp, 0, size);
 				break;
 			case 0x15:	//Item Update
 				tmp = new byte[size];
-				Bot.in.read(tmp, 0, size);
+				Bot.in.readFully(tmp, 0, size);
 				break;
 			case 0x16:	//Item Owner
 				tmp = new byte[size];
-				Bot.in.read(tmp, 0, size);
+				Bot.in.readFully(tmp, 0, size);
 				break;
 			case 0x17:	//Npc Update
 				tmp = new byte[size];
-				Bot.in.read(tmp, 0, size);
+				Bot.in.readFully(tmp, 0, size);
 				break;
 			case 0x18:	//Npc Item Strike
 				tmp = new byte[size];
-				Bot.in.read(tmp, 0, size);
+				Bot.in.readFully(tmp, 0, size);
 				break;
 			case 0x19:	//Chat Text
-				tmp = new byte[size];
-				Bot.in.read(tmp, 0, size);
+				tmp = new byte[size-4];
+				Bot.in.readInt();
+				Bot.in.readFully(tmp, 0, size-4);
+				System.out.println(new String(tmp));
 				break;
 			case 0x1A:	//Player Damage
 				tmp = new byte[size];
-				Bot.in.read(tmp, 0, size);
+				Bot.in.readFully(tmp, 0, size);
 				break;
 			case 0x1B:	//Projectile New
 				tmp = new byte[size];
-				Bot.in.read(tmp, 0, size);
+				Bot.in.readFully(tmp, 0, size);
 				break;
 			case 0x1C:	//Npc Strike
 				tmp = new byte[size];
-				Bot.in.read(tmp, 0, size);
+				Bot.in.readFully(tmp, 0, size);
 				break;
 			case 0x1D:	//Projectile Destroy
 				tmp = new byte[size];
-				Bot.in.read(tmp, 0, size);
+				Bot.in.readFully(tmp, 0, size);
 				break;
 			case 0x20:	//Chest Item
 				tmp = new byte[size];
-				Bot.in.read(tmp, 0, size);
+				Bot.in.readFully(tmp, 0, size);
 				break;
 			case 0x27:	//Item Unknown
 				tmp = new byte[size];
-				Bot.in.read(tmp, 0, size);
+				Bot.in.readFully(tmp, 0, size);
 				break;
 			case 0x2F:	//Sign Update
 				tmp = new byte[size];
-				Bot.in.read(tmp, 0, size);
+				Bot.in.readFully(tmp, 0, size);
 				break;
 			case 0x30:	//Liquid Set
 				tmp = new byte[size];
-				Bot.in.read(tmp, 0, size);
+				Bot.in.readFully(tmp, 0, size);
 				break;
-			case 0x31:
-				tmp = new byte[size];
-				Bot.in.read(tmp, 0, size);
+			case 0x31: //Player First Spawn
+				Bot.Active = true;
 				break;
 			case 0x33:	//Npc Special
 				tmp = new byte[size];
-				Bot.in.read(tmp, 0, size);
+				Bot.in.readFully(tmp, 0, size);
 				break;
 			case 0x36:	//Npc Update Buff
 				tmp = new byte[size];
-				Bot.in.read(tmp, 0, size);
+				Bot.in.readFully(tmp, 0, size);
 				break;
 			case 0x38:	//Update Npc Name
 				tmp = new byte[size];
-				Bot.in.read(tmp, 0, size);
+				Bot.in.readFully(tmp, 0, size);
 				break;
 			case 0x39:	//Update Good/Evil Percentage
 				tmp = new byte[size];
-				Bot.in.read(tmp, 0, size);
+				Bot.in.readFully(tmp, 0, size);
 				break;
 			case 0x3A:	//Play Harp
 				tmp = new byte[size];
-				Bot.in.read(tmp, 0, size);
+				Bot.in.readFully(tmp, 0, size);
 				break;
 			case 0x3B:	//Hit Switch
 				tmp = new byte[size];
-				Bot.in.read(tmp, 0, size);
+				Bot.in.readFully(tmp, 0, size);
 				break;
 			case 0x3C:	//Npc Home Info Update
 				tmp = new byte[size];
-				Bot.in.read(tmp, 0, size);
+				Bot.in.readFully(tmp, 0, size);
 				break;
 		}
 		
