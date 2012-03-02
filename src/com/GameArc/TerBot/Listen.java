@@ -12,7 +12,7 @@ public class Listen implements Runnable{
 				pID = Bot.in.readByte();
 				if(pID != 70)
 				size--;
-				//System.out.println("Packet ID: " + pID + "\nSize: " + (size));
+				//;"Packet ID: " + pID + "\nSize: " + (size));
 				ParsePacket();
 			}
 		}catch(Exception e){
@@ -23,8 +23,8 @@ public class Listen implements Runnable{
 	
 	public void ParsePacket() throws Exception {
 		byte[] tmp;
-		switch(pID){
-			default:
+		switch(pID) {
+			case 0x01:
 				tmp = new byte[size];
 				Bot.in.readFully(tmp, 0, size);
 				break;
@@ -34,7 +34,19 @@ public class Listen implements Runnable{
 				System.out.println("Disconnected from server\nReason: " + new String(tmp).trim());
 				System.exit(1);
 				break;
+			case 0x03:
+				tmp = new byte[size];
+				Bot.in.readFully(tmp, 0, size);
+				break;
 			case 0x04:
+				tmp = new byte[size];
+				Bot.in.readFully(tmp, 0, size);
+				break;
+			case 0x05:
+				tmp = new byte[size];
+				Bot.in.readFully(tmp, 0, size);
+				break;
+			case 0x06:
 				tmp = new byte[size];
 				Bot.in.readFully(tmp, 0, size);
 				break;
@@ -54,8 +66,10 @@ public class Listen implements Runnable{
 				Storage.BossFlag =	Bot.in.readByte();
 				tmp = new byte[size-36];
 				Bot.in.readFully(tmp, 0, size-36);
-				Storage.ServerName = new String(tmp).trim();
-				System.out.println("Server Name: " + Storage.ServerName);
+				break;
+			case 0x08:
+				tmp = new byte[size];
+				Bot.in.readFully(tmp, 0, size);
 				break;
 			case 0x09:	//Status
 				Bot.in.readInt();
@@ -71,16 +85,24 @@ public class Listen implements Runnable{
 				tmp = new byte[size];
 				Bot.in.readFully(tmp, 0, size);
 				break;
+			case 0x0C:
+				tmp = new byte[size];
+				Bot.in.readFully(tmp, 0, size);
+				break;
 			case 0x0D: //Player update
-				Bot.teamate.PlayerID = Bot.in.readByte();
-				Bot.teamate.Control = Bot.in.readByte();
-				Bot.teamate.SelectedItem = Bot.in.readByte();
-				Bot.teamate.X = Bot.in.readFloat();
-				Bot.teamate.Y = Bot.in.readFloat();
-				Bot.teamate.vX = Bot.in.readFloat();
-				Bot.teamate.vY = Bot.in.readFloat();
+				Bot.player.PlayerID = Bot.in.readByte();
+				Bot.player.Control = Bot.in.readByte();
+				Bot.player.SelectedItem = Bot.in.readByte();
+				Bot.player.X = Bot.in.readFloat();
+				Bot.player.Y = Bot.in.readFloat();
+				Bot.player.vX = Bot.in.readFloat();
+				Bot.player.vY = Bot.in.readFloat();
 				break;
 			case 0x0E:	//Player Active
+				tmp = new byte[size];
+				Bot.in.readFully(tmp, 0, size);
+				break;
+			case 0x10:
 				tmp = new byte[size];
 				Bot.in.readFully(tmp, 0, size);
 				break;
@@ -109,8 +131,17 @@ public class Listen implements Runnable{
 				Bot.in.readFully(tmp, 0, size);
 				break;
 			case 0x17:	//Npc Update
-				tmp = new byte[size];
-				Bot.in.readFully(tmp, 0, size);
+				Bot.in.readShort();
+				Bot.in.readFloat();
+				Bot.in.readFloat();
+				Bot.in.readFloat();
+				Bot.in.readFloat();
+				Bot.in.readShort();
+				Bot.in.readByte();
+				Bot.in.readByte();
+				Bot.in.readShort();
+				Bot.in.skip(16);
+				Bot.in.readShort();
 				break;
 			case 0x18:	//Npc Item Strike
 				tmp = new byte[size];
@@ -118,7 +149,8 @@ public class Listen implements Runnable{
 				break;
 			case 0x19:	//Chat Text
 				tmp = new byte[size-4];
-				Bot.in.readInt();
+				System.out.print(Bot.in.readByte() + ": ");
+				Bot.in.skip(3);
 				Bot.in.readFully(tmp, 0, size-4);
 				System.out.println(new String(tmp));
 				break;
@@ -142,7 +174,59 @@ public class Listen implements Runnable{
 				tmp = new byte[size];
 				Bot.in.readFully(tmp, 0, size);
 				break;
+			case 0x21:
+				tmp = new byte[size];
+				Bot.in.readFully(tmp, 0, size);
+				break;
+			case 0x22:
+				tmp = new byte[size];
+				Bot.in.readFully(tmp, 0, size);
+				break;
+			case 0x23:
+				tmp = new byte[size];
+				Bot.in.readFully(tmp, 0, size);
+				break;
+			case 0x24:
+				tmp = new byte[size];
+				Bot.in.readFully(tmp, 0, size);
+				break;
+			case 0x25:
+				tmp = new byte[size];
+				Bot.in.readFully(tmp, 0, size);
+				break;
+			case 0x26:
+				tmp = new byte[size];
+				Bot.in.readFully(tmp, 0, size);
+				break;
 			case 0x27:	//Item Unknown
+				tmp = new byte[size];
+				Bot.in.readFully(tmp, 0, size);
+				break;
+			case 0x28:
+				tmp = new byte[size];
+				Bot.in.readFully(tmp, 0, size);
+				break;
+			case 0x29:
+				tmp = new byte[size];
+				Bot.in.readFully(tmp, 0, size);
+				break;
+			case 0x2A:
+				tmp = new byte[size];
+				Bot.in.readFully(tmp, 0, size);
+				break;
+			case 0x2B:
+				tmp = new byte[size];
+				Bot.in.readFully(tmp, 0, size);
+				break;
+			case 0x2C:
+				tmp = new byte[size];
+				Bot.in.readFully(tmp, 0, size);
+				break;
+			case 0x2D:
+				tmp = new byte[size];
+				Bot.in.readFully(tmp, 0, size);
+				break;
+			case 0x2E:
 				tmp = new byte[size];
 				Bot.in.readFully(tmp, 0, size);
 				break;
@@ -157,11 +241,27 @@ public class Listen implements Runnable{
 			case 0x31: //Player First Spawn
 				Bot.Active = true;
 				break;
+			case 0x32:
+				tmp = new byte[size];
+				Bot.in.readFully(tmp, 0, size);
+				break;
 			case 0x33:	//Npc Special
 				tmp = new byte[size];
 				Bot.in.readFully(tmp, 0, size);
 				break;
-			case 0x36:	//Npc Update Buff
+			case 0x34:
+				tmp = new byte[size];
+				Bot.in.readFully(tmp, 0, size);
+				break;
+			case 0x35:
+				tmp = new byte[size];
+				Bot.in.readFully(tmp, 0, size);
+				break;
+			case 0x36:
+				tmp = new byte[size];
+				Bot.in.readFully(tmp, 0, size);
+				break;
+			case 0x37:	//Npc Update Buff
 				tmp = new byte[size];
 				Bot.in.readFully(tmp, 0, size);
 				break;
@@ -182,6 +282,10 @@ public class Listen implements Runnable{
 				Bot.in.readFully(tmp, 0, size);
 				break;
 			case 0x3C:	//Npc Home Info Update
+				tmp = new byte[size];
+				Bot.in.readFully(tmp, 0, size);
+				break;
+			default:
 				tmp = new byte[size];
 				Bot.in.readFully(tmp, 0, size);
 				break;
