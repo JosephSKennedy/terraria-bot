@@ -1,25 +1,38 @@
 package com.GameArc.TerBot.AI;
 
 import com.GameArc.TerBot.Bot;
+import com.GameArc.TerBot.Player.States;
 
 public abstract class AI {
 	
 	public abstract void closeAI();
+	public abstract void openAI();
 	public abstract void logic();
 	boolean isAlive = false;
 	
 	public AI(){
-		thr.start();
 		isAlive = true;
+		openAI();
 	}
 	
 	public void stop(){
 		isAlive = false;
 		closeAI();
-		thr.interrupt();
 	}
 	public void KillNPC(short id){
 		
+	}
+	public void UpdatePlayer(){
+		try{
+		Bot.out.write(new byte[]{0x14, 0x00, 0x00, 0x00, 0x0D});
+		Bot.out.writeByte(Bot.player.PlayerID);
+		Bot.out.writeByte(Bot.bot.Control);
+		Bot.out.writeByte(Bot.bot.SelectedItem);
+		Bot.out.writeFloat(Bot.bot.X);
+		Bot.out.writeFloat(Bot.bot.Y);
+		Bot.out.writeFloat(Bot.bot.vX);
+		Bot.out.writeFloat(Bot.bot.vY);
+		}catch(Exception e){e.printStackTrace();}
 	}
 	public void GotoPosition(float x, float y){
 		Bot.bot.X = x;
@@ -32,22 +45,34 @@ public abstract class AI {
 		}
 		
 		if(Bot.bot.X < Bot.player.X - 12){
-			Bot.bot.X += 3f;
-			Bot.bot.X = 3f;
-			Bot.bot.Control = 8;
+			Bot.bot.X += 1f;
+			Bot.bot.vX = 3f;
 		}else{
 			Bot.bot.vX = 0;
+			Bot.bot.Control = States.IdleRight;
 		}
 		
 		if(Bot.bot.X > Bot.player.X + 12){
-			Bot.bot.X -= 3f;
-			Bot.bot.X = -3f;
-			Bot.bot.Control = 4;
+			Bot.bot.X -= 1f;
+			Bot.bot.vX = -3f;
 		}else{
 			Bot.bot.vX = 0;
+			Bot.bot.Control = States.IdleLeft;
+		}
+		
+		if(Bot.bot.vX == -3f) {
+			Bot.bot.Control = States.FirstLeft;
+			UpdatePlayer();
+			Bot.bot.Control = States.WalkLeft;
+		}
+		else {
+			Bot.bot.Control = States.FirstRight;
+			UpdatePlayer();
+			Bot.bot.Control = States.WalkRight;
 		}
 		
 		Bot.bot.Y = Bot.player.Y;
+		UpdatePlayer();
 	}
 	public void DestroyTile(int x, int y){
 		try {
@@ -106,6 +131,5 @@ public abstract class AI {
 			Bot.out.writeString(tmp);
 		} catch(Exception e){e.printStackTrace();}
 	}
-	public Thread thr = new Thread( new Runnable(){public void run() {logic();}});
 
 }

@@ -1,6 +1,5 @@
 package com.GameArc.TerBot.AI;
 
-
 public class Follower extends AI {
 
 	public void openAI(){
@@ -12,9 +11,7 @@ public class Follower extends AI {
 	}
 	
 	public void logic() {
-		while(isAlive){
-			FollowPlayer();
-		}
+		FollowPlayer();
 	}
 
 }

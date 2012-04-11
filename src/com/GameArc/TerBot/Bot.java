@@ -3,6 +3,8 @@ package com.GameArc.TerBot;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import com.GameArc.TerBot.AI.AI;
+import com.GameArc.TerBot.AI.Follower;
 import com.GameArc.TerBot.io.LittleEndianDataInputStream;
 import com.GameArc.TerBot.io.LittleEndianDataOutputStream;
 
@@ -12,6 +14,7 @@ public class Bot {
 	
 	static Socket c, s;
 	public static Player bot, player;
+	public static AI BotAI;
 	static ServerSocket ss;
 	public static LittleEndianDataOutputStream out;
 	public static LittleEndianDataInputStream in;
@@ -20,19 +23,21 @@ public class Bot {
 	static String tmp = "";
 	
 	public static void main(String args[]) throws Exception{
+		player = new Player();
+		if(args.length  == 2){
+			ServerIP = args[0];
+			player.Name = args[1];
+		}else {
+			player.Name = "GamerEngage";
+			//System.exit(1);
+		}
 		setInit();
+		BotAI = new Follower();
 		while(!Active)Thread.sleep(250);
 		out.write(new byte[]{0x01, 0x00, 0x00, 0x00, 0x0F});
-		while(true) { 			
-			out.write(new byte[]{0x14, 0x00, 0x00, 0x00, 0x0D});
-			out.writeByte(Storage.PlayerID);
-			out.writeByte(bot.Control);
-			out.writeByte(bot.SelectedItem);
-			out.writeFloat(bot.X);
-			out.writeFloat(bot.Y);
-			out.writeFloat(bot.vX);
-			out.writeFloat(bot.vY);
-			Thread.sleep(1);
+		while(true) { 
+			BotAI.logic();
+			Thread.sleep(10);
 		}
 	}
 	

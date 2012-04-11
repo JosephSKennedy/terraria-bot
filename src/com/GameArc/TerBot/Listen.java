@@ -12,11 +12,11 @@ public class Listen implements Runnable{
 				pID = Bot.in.readByte();
 				if(pID != 70)
 				size--;
-				//;"Packet ID: " + pID + "\nSize: " + (size));
+				//System.out.println("Packet ID: " + pID);
 				ParsePacket();
 			}
 		}catch(Exception e){
-			//System.out.println("Packet ID: " + pID + "\nSize: " + (size-1));
+			System.out.println("Packet ID: " + pID + "\nSize: " + (size-1));
 			e.printStackTrace();
 		}
 	}
@@ -35,12 +35,16 @@ public class Listen implements Runnable{
 				System.exit(1);
 				break;
 			case 0x03:
-				tmp = new byte[size];
-				Bot.in.readFully(tmp, 0, size);
+				Bot.bot.PlayerID = Bot.in.readByte();
 				break;
-			case 0x04:
-				tmp = new byte[size];
-				Bot.in.readFully(tmp, 0, size);
+			case 0x04: //Player Info
+				byte tmpPID = Bot.in.readByte();
+				tmp = new byte[24];
+				Bot.in.readFully(tmp, 0, 24);
+				byte[] tmpN = new byte[size-25];
+				Bot.in.readFully(tmpN, 0, size-25);
+				String tmpName = new String(tmpN);
+				if(tmpName.equals(Bot.player.Name))Bot.player.PlayerID = tmpPID;
 				break;
 			case 0x05:
 				tmp = new byte[size];
@@ -90,13 +94,19 @@ public class Listen implements Runnable{
 				Bot.in.readFully(tmp, 0, size);
 				break;
 			case 0x0D: //Player update
-				Bot.player.PlayerID = Bot.in.readByte();
-				Bot.player.Control = Bot.in.readByte();
-				Bot.player.SelectedItem = Bot.in.readByte();
-				Bot.player.X = Bot.in.readFloat();
-				Bot.player.Y = Bot.in.readFloat();
-				Bot.player.vX = Bot.in.readFloat();
-				Bot.player.vY = Bot.in.readFloat();
+				byte tmpP = Bot.in.readByte();
+				if(tmpP == Bot.player.PlayerID){
+					Bot.player.Control = Bot.in.readByte();
+					System.out.println(Bot.player.Control);
+					Bot.player.SelectedItem = Bot.in.readByte();
+					Bot.player.X = Bot.in.readFloat();
+					Bot.player.Y = Bot.in.readFloat();
+					Bot.player.vX = Bot.in.readFloat();
+					Bot.player.vY = Bot.in.readFloat();
+				}else {
+					tmp = new byte[size-1];
+					Bot.in.readFully(tmp, 0, size-1);
+				}
 				break;
 			case 0x0E:	//Player Active
 				tmp = new byte[size];
@@ -131,17 +141,8 @@ public class Listen implements Runnable{
 				Bot.in.readFully(tmp, 0, size);
 				break;
 			case 0x17:	//Npc Update
-				Bot.in.readShort();
-				Bot.in.readFloat();
-				Bot.in.readFloat();
-				Bot.in.readFloat();
-				Bot.in.readFloat();
-				Bot.in.readShort();
-				Bot.in.readByte();
-				Bot.in.readByte();
-				Bot.in.readShort();
-				Bot.in.skip(16);
-				Bot.in.readShort();
+				tmp = new byte[size];
+				Bot.in.readFully(tmp, 0, size);
 				break;
 			case 0x18:	//Npc Item Strike
 				tmp = new byte[size];
@@ -290,7 +291,7 @@ public class Listen implements Runnable{
 				Bot.in.readFully(tmp, 0, size);
 				break;
 		}
-		
+		Runtime.getRuntime().gc();
 	}
 	
 }
