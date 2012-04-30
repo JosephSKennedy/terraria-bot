@@ -1,0 +1,9 @@
+C:\Users\lasse.IDRIFT\Documents\Visual Studio 2010\Projects\TerBot\TestAi\bin\Debug\TestAi.dll
+C:\Users\lasse.IDRIFT\Documents\Visual Studio 2010\Projects\TerBot\TestAi\bin\Debug\TestAi.pdb
+C:\Users\lasse.IDRIFT\Documents\Visual Studio 2010\Projects\TerBot\TestAi\bin\Debug\PluginLib.dll
+C:\Users\lasse.IDRIFT\Documents\Visual Studio 2010\Projects\TerBot\TestAi\bin\Debug\PluginLib.pdb
+C:\Users\lasse.IDRIFT\Documents\Visual Studio 2010\Projects\TerBot\TestAi\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\lasse.IDRIFT\Documents\Visual Studio 2010\Projects\TerBot\TerBot\bin\Debug\plugins\TestAi.dll
+C:\Users\lasse.IDRIFT\Documents\Visual Studio 2010\Projects\TerBot\TerBot\bin\Debug\plugins\TestAi.pdb
+C:\Users\lasse.IDRIFT\Documents\Visual Studio 2010\Projects\TerBot\TestAi\obj\Debug\TestAi.dll
+C:\Users\lasse.IDRIFT\Documents\Visual Studio 2010\Projects\TerBot\TestAi\obj\Debug\TestAi.pdb

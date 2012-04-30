@@ -1,0 +1,7 @@
+C:\Users\lasse.IDRIFT\Documents\Visual Studio 2010\Projects\TerBot\TerBot\bin\Debug\PluginLib.dll
+C:\Users\lasse.IDRIFT\Documents\Visual Studio 2010\Projects\TerBot\TerBot\bin\Debug\PluginLib.pdb
+C:\Users\lasse.IDRIFT\Documents\Visual Studio 2010\Projects\TerBot\PluginLib\bin\Debug\PluginLib.dll
+C:\Users\lasse.IDRIFT\Documents\Visual Studio 2010\Projects\TerBot\PluginLib\bin\Debug\PluginLib.pdb
+C:\Users\lasse.IDRIFT\Documents\Visual Studio 2010\Projects\TerBot\PluginLib\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\lasse.IDRIFT\Documents\Visual Studio 2010\Projects\TerBot\PluginLib\obj\Debug\PluginLib.dll
+C:\Users\lasse.IDRIFT\Documents\Visual Studio 2010\Projects\TerBot\PluginLib\obj\Debug\PluginLib.pdb
