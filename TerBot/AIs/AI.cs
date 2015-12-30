@@ -9,22 +9,28 @@ namespace TerBot.AIs {
 
         public abstract void closeAI();
         public abstract void openAI();
+		//Implement this method to provide the bot's logic
         public abstract void logic();
         bool isAlive = false;
 
+		//Unsure how this is distinct from user-implemented openAI()
         public AI() {
             isAlive = true;
             openAI();
         }
 
+		//Unsure how this is distinct from user-implemented closeAI()
         public void stop() {
             isAlive = false;
             closeAI();
         }
-        public void KillNPC(short id) {
+        
+		//Unimplemented
+		public void KillNPC(short id) {
 
         }
-        public void UpdatePlayer() {
+        
+		public void UpdatePlayer() {
             try {
                 Bot.output.Write(new byte[] { 0x14, 0x00, 0x00, 0x00, 0x0D });
                 Bot.output.Write(Bot.player.PlayerID);

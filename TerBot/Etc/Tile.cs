@@ -3,12 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace TerBot {
-    class Tile {
+//As of version 1.3, there are 418 tile types, 192 of which are block types
+
+namespace TerBot
+{
+	//In this class, there are a mix of block and non-block items
+    class Tile
+	{
         public static byte Dirt = 0x00;
         public static byte Stone = 0x01;
         public static byte Grass = 0x02;
-        public static byte nWeeds = 0x03;
+        public static byte Weeds = 0x03;
         public static byte Torches = 0x04;
         public static byte Logs = 0x05;
         public static byte Iron = 0x06;
@@ -25,7 +30,7 @@ namespace TerBot {
         public static byte Furnace = 0x11;
         public static byte WorkBench = 0x12;
         public static byte Plank = 0x13;
-        public static byte Sappling = 0x14;
+        public static byte Sapling = 0x14;
         public static byte Chest = 0x15;
         public static byte CorruptedStone = 0x16;
         public static byte CorruptedGrass = 0x17;
@@ -33,7 +38,7 @@ namespace TerBot {
         public static byte EbonStone = 0x19;
         public static byte DemonAlter = 0x1A;
         public static byte SunFlower = 0x1B;
-        public static byte nPot = 0x1C;
+        public static byte Pot = 0x1C;
         public static byte PiggyBank = 0x1D;
         public static byte Wood = 0x1E;
         public static byte ShadowOrb = 0x1F;
@@ -145,7 +150,7 @@ namespace TerBot {
         public static byte DartTrap = (byte)0x89;
         public static byte Boulder = (byte)0x8A;
         public static byte MusicBox = (byte)0x8B;
-        public static byte nPurpleBrick = (byte)0x8C;
+        public static byte DemoniteBrick = (byte)0x8C;
         public static byte Explosives = (byte)0x8D;
         public static byte InletPump = (byte)0x8E;
         public static byte OutletPump = (byte)0x8F;
@@ -156,4 +161,11 @@ namespace TerBot {
         public static byte SnowBrick = (byte)0x94;
         public static byte ChristmasLight = (byte)0x95;
     }
+	
+	/*
+	class Ore
+	{
+		
+	}
+	*/
 }

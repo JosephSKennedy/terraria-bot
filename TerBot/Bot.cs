@@ -8,8 +8,10 @@ using System.Threading;
 using System.IO;
 using TerBot.AIs;
 
-namespace TerBot {
-    class Bot {
+namespace TerBot
+{
+    class Bot
+	{
         static String ServerIP = "127.0.0.1";
 
         static TcpClient c;
@@ -81,8 +83,8 @@ namespace TerBot {
                 bot = new Player();
                 player = new Player();
                 output.Write(new byte[]{
-				0x0B, 0x00, 0x00, 0x00, 0x01
-			});
+				  0x0B, 0x00, 0x00, 0x00, 0x01
+				});
                 output.Write(Encoding.ASCII.GetBytes("Terraria39"));
 
                 int i = input.ReadInt32();
@@ -101,13 +103,13 @@ namespace TerBot {
                 output.Write(Storage.Buff);
                 output.Write(new byte[]{
 					0x01, 0x00, 0x00, 0x00, 0x06
-			});
+				});
                 output.Write(new byte[]{
 					0x09, 0x00, 0x00, 0x00, 0x08, (byte) 0xFF, (byte) 0xFF, (byte) 0xFF, (byte) 0xFF, (byte) 0xFF, (byte) 0xFF, (byte) 0xFF, (byte) 0xFF
-			});
+				});
                 output.Write(new byte[]{
 					0x0A, 0x00, 0x00, 0x00, 0x0C, Bot.bot.PlayerID,(byte) 0xFF, (byte) 0xFF, (byte) 0xFF, (byte) 0xFF, (byte) 0xFF, (byte) 0xFF, (byte) 0xFF, (byte) 0xFF
-			});
+				});
             } catch (Exception e) {
                 Console.WriteLine(e.Message);
                 Console.ReadKey();

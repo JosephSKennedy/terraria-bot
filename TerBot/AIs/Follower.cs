@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+//This AI is simply follows the player around
+//FollowPlayer() is defined is AI.cs (Perhaps is should be moved into here? Unlikely)
+
 namespace TerBot.AIs {
     class Follower : AI {
 

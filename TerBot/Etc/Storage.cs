@@ -10,7 +10,7 @@ namespace TerBot {
     class Storage {
         public static int Time = 0;
         public static bool DayTime;
-        public static byte MoonPhase;
+        public static byte MoonPhase; //Eight phases
         public static bool BloodMoon;
         public static int MaxTilesX = 0;
         public static int MaxTilesY = 0;

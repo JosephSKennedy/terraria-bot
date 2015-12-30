@@ -13,6 +13,7 @@ namespace TerBot {
         public byte PlayerID = 0;
         public String Name = "";
 
+		//Unknown values
         public static class States {
             public static byte IdleLeft = 0;
             public static byte FirstLeft = 68;
